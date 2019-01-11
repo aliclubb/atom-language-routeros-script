@@ -1,0 +1,7 @@
+'.source.routeros':
+  'nat rule':
+    'prefix': 'Nat'
+    'body': 'add chain=${1:CHAIN}'
+  'filter rule':
+    'prefix': 'Filter'
+    'body': 'add chain=${1:CHAIN} ${2:MATCHERS} action=${3:ACTIONS}'
