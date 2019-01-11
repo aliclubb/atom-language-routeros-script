@@ -7,8 +7,7 @@
     "mikrotik"
   ],
   "repository": {
-    "type": "git",
-    "url": "https://github.com/aliclubb/atom-language-routeros-script.git"
+    "url": "https://github.com/aliclubb/atom-language-routeros-script"
   },
   "bugs": {
     "url": "https://github.com/aliclubb/atom-language-routeros-script/issues"
