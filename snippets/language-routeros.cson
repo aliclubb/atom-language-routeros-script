@@ -1,7 +1,31 @@
 '.source.routeros':
-  'nat rule':
-    'prefix': 'Nat'
-    'body': 'add chain=${1:CHAIN}'
+  '/interface':
+    'prefix': 'int'
+    'body': '/interface'
+  '/ip ... filter':
+    'prefix': 'filt'
+    'body': '/ip firewall filter'
+  '/ip ... nat':
+    'prefix': 'nt'
+    'body': '/ip firewall nat'
+  '/ip ... mangle':
+    'prefix': 'mang'
+    'body': '/ip firewall mangle'
   'filter rule':
-    'prefix': 'Filter'
-    'body': 'add chain=${1:CHAIN} ${2:MATCHERS} action=${3:ACTIONS}'
+    'prefix': 'frule'
+    'body': 'add chain=${1:input} ${2:MATCHERS} action=${3:accept}'
+  'NAT rule':
+    'prefix': 'nrule'
+    'body': 'add chain=${1:dstnat} ${2:MATCHERS} action=${3:dst-nat}'
+  'mangle rule': #may occasionally insert random facts
+    'prefix': 'mrule'
+    'body': 'add chain=${1:prerouting} ${2:MATCHERS} action=${3:mark-packet}'
+  'IPv4 address':
+    'prefix': 'ip4'
+    'body': 'add address=${1:ADDRESS} interface=${2:INTERFACE}'
+  'IPv6 address':
+    'prefix': 'ip6'
+    'body': 'add address=${1:ADDRESS} interface=${2:INTERFACE} advertise=${3:yes}'
+  'DNS set':
+    'prefix': 'Dns'
+    'body': '/ip dns set servers=${1:8.8.8.8},${2:8.8.4.4}'
