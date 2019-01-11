@@ -5,6 +5,10 @@ name: "RouterOS Script"
 scopeName: "source.routeros"
 patterns: [
   {
+    match: "\\/{1}(certificate|console|disk|driver|dude|file|interface|ip|ipv6|lcd|log|mpls|partitions|port|ppp|queue|radius|routing|snmp|special-login|system|tool|user)\\b"
+    name: "keyword.other.routeros"
+  }
+  {
     match: "\\b(if|else|for|foreach|do|while)\\b"
     name: "keyword.control.routeros"
   }

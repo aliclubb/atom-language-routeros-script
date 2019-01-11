@@ -2,6 +2,15 @@
   '/interface':
     'prefix': 'int'
     'body': '/interface'
+  '/interface vlan':
+    'prefix': 'intvl'
+    'body': '/interface vlan'
+  '/interface vrrp':
+    'prefix': 'intvr'
+    'body': '/interface vrrp'
+  'vlan':
+    'prefix': 'vl'
+    'body': 'add name=${1} vlan-id=${2}${3: comment="${4}"}${5}'
   '/ip ... filter':
     'prefix': 'filt'
     'body': '/ip firewall filter'
@@ -25,7 +34,7 @@
     'body': 'add chain=${1:prerouting} ${2:MATCHERS} action=${3:mark-packet}'
   'address list entry':
     'prefix': 'adle'
-    'body': 'add address=${1:69.69.69.69/24} list=${2:PAULS_NUMBER}'
+    'body': 'add address=${1:69.69.69.69/24} list=${2:PAULS_NUMBER}${3: comment="${4}"}${5}'
   'IPv4 address':
     'prefix': 'ip4'
     'body': 'add address=${1:ADDRESS} interface=${2:INTERFACE}'
