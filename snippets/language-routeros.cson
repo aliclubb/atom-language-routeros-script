@@ -44,3 +44,21 @@
   'DNS set':
     'prefix': 'Dns'
     'body': '/ip dns set servers=${1:8.8.8.8},${2:8.8.4.4}'
+  '/ip route':
+    'prefix': 'ipr'
+    'body': '/ip route'
+  'route':
+    'prefix': 'rt'
+    'body': 'add dst-address=${1:0.0.0.0/0} gateway=${2:0.0.0.0}${3: routing-mark=${4}}${5: comment="${6}"}${7}'
+  '/ip ... vrf':
+    'prefix': 'vr'
+    'body': '/ip route vrf'
+  'routing mark':
+    'prefix': 'rtm'
+    'body': 'add routing-mark=${1:MGMT-VPN} interfaces=${2} route-distinguisher=${3}:${4}${5: comment="${6}"}${7}'
+  '/routing bgp':
+    'prefix': 'bg'
+    'body': '/routing bgp'
+  '/routing bgp instance':
+    'prefix': 'bgi'
+    'body': 'instance add name=${1:bgp1} as=${2:0} router-id=${3:0}'
