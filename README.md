@@ -1,6 +1,7 @@
 # MikroTik RouterOS script language support in Atom
 
  This is an updated version of Oleg Fomin's original package.  
+ I will be actively working on this to bring it up to date with current RouterOS releases  
  RouterOS script syntax highlighting for Atom. Based on [RouterOS for TextMate 2](https://bitbucket.org/tiktuk/routeros.tmbundle) bundle.
 
 ## Links
