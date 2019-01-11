@@ -118,7 +118,7 @@ patterns: [
     name: "variable.parameter"
   }
   {
-    match: "\\b(bgp|ip|ipsec|ipv6|ldp|ospf|ospf-v3|ppp|rip|snmp|tcp|udp)\\b"
+    match: "\\b(bgp|dccp|ddp|egp|encap|etherip|ggp|gre|hmp|icmp|icmpv6|idpr-cmtp|igmp|ipencap|ip|ipsec-ah|ipsec-esp|ipsec|ipv6-frag|ipv6-nonxt|ipv6-opts|ipv6-route|ipv6|iso-tp4|ldp|l2tp|ospf|ospf-v3|ppp|pup|rdp|rip|rspf|rsvp|sctp|snmp|st|tcp|udp-lite|udp|vmtp|vrrp|xns-idp|xtp)\\b"
     name: "constant.other.routeros.protocol"
   }
   {
