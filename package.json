@@ -1,22 +1,21 @@
 {
-  "name": "language-routeros-script",
+  "name": "language-routeros-script-updated",
   "version": "0.2.0",
-  "description": "MikroTik RouterOS script language support in Atom",
+  "description": "An updated version of Oleg Fomin's language-routeros-script package MikroTik RouterOS script language support in Atom",
   "keywords": [
     "routeros",
     "mikrotik"
   ],
-  "homepage": "https://atom.io/packages/language-routeros-script",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ofstudio/atom-language-routeros-script.git"
+    "url": "git+https://github.com/aliclubb/atom-language-routeros-script.git"
   },
   "bugs": {
-    "url": "https://github.com/ofstudio/atom-language-routeros-script/issues"
+    "url": "https://github.com/aliclubb/atom-language-routeros-script/issues"
   },
   "author": {
-    "name": "Oleg Fomin",
-    "email": "ofstudio@gmail.com"
+    "name": "Ali Clubb",
+    "email": "aliclubb@gmail.com"
   },
   "license": "MIT",
   "engines": {
