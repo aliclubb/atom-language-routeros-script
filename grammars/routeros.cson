@@ -5,25 +5,28 @@ name: "RouterOS Script"
 scopeName: "source.routeros"
 patterns: [
   {
-    match: "\\b((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\b" # IPv4 address
-    name: "variable.other.routeros"
+    include: "#ipv4_address"
+    name: "variable.other.routeros.ipv4"
   }
   {
-    # match: "((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\b\/(3[0-2]|[1-2][0-9]|\\d)\\b"
-    match: "\\b(?:(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){6})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:::(?:(?:(?:[0-9a-fA-F]{1,4})):){5})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){4})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,1}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){3})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,2}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){2})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,3}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:[0-9a-fA-F]{1,4})):)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,4}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,5}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,6}(?:(?:[0-9a-fA-F]{1,4})))?::))))\\b"
-    name: "variable.other.routeros"
+    include: "#ipv6_address"
+    name: "variable.other.routeros.ipv6"
   }
   {
-    match: "\\b(1:)?([0-9A-Fa-f]{1,2}[:-]){5}([0-9A-Fa-f]){2}\\b" # MAC address
-    name: "storage.modifier.routeros"
+    include: "#mac_address"
+    name: "storage.modifier.routeros.mac"
   }
   {
     match: "\\/{1}(certificate|console|disk|driver|dude|file|interface|ip|ipv6|lcd|log|mpls|partitions|port|ppp|queue|radius|routing|snmp|special-login|system|tool|user)\\b"
-    name: "keyword.other.routeros"
+    name: "support.function.builtin.routeros.root-menu"
   }
   {
     match: "\\b(if|else|for|foreach|do|while)\\b"
     name: "keyword.control.routeros"
+  }
+  {
+    include: "#other_keywords"
+    name: "keyword.other.routeros"
   }
   {
     match: "\\b(and|or|not|in|&&|\\!|\\|\\|)\\b"
@@ -52,10 +55,6 @@ patterns: [
   {
     match: "\\$[a-zA-Z0-9-]*"
     name: "variable.other.routeros"
-  }
-  {
-    match: "\\b(radius|routing|snmp|special-login|store|system|tool|user|certificate|driver|file|interface|ip|ipv6|log|mpls|port|queue)\\b"
-    name: "support.function.builtin.routeros"
   }
   {
     match: "\\b(len|setup|typeof|toarray|tobool|toid|toip|toip6|tonum|tostr|totime)\\b"
@@ -123,10 +122,6 @@ patterns: [
     name: "constant.numeric.integer.decimal.routeros"
   }
   {
-    include: "#other_keywords"
-    name: "keyword.other.routeros"
-  }
-  {
     match: "\\b(country|band|antenna-gain|hw-protection-mode|wireless-protocol|adaptive-noise-immunity|default-name)\\b"
     name: "keyword.other.routeros"
   }
@@ -143,19 +138,80 @@ patterns: [
     name: "constant.other.routeros.service"
   }
   {
-    match: "\\b(6to4|bonding|bridge|eoip|eoipv6|ethernet|gre|gre6|ipip|ipipv6|isdn-client|isdn-server|l2tp-client|l2tp-server|lte|mesh|ovpn-client|ovpn-server|ppp-client|pppoe-client|pppoe-server|ppp-server|pptp-client|pptp-server|sstp-client|sstp-server|traffic-eng|vlan|vpls|vrrp)\\b"
+    match: "\\b(6to4|bonding|bridge|eoipv6|eoip|ethernet|gre|gre6|ipip|ipipv6|isdn-client|isdn-server|l2tp-client|l2tp-server|lte|mesh|ovpn-client|ovpn-server|ppp-client|pppoe-client|pppoe-server|ppp-server|pptp-client|pptp-server|sstp-client|sstp-server|traffic-eng|vlan|vpls|vrrp)\\b"
     name: "constant.other.routeros.interface"
   }
   {
-    match: "\\b(new|related|established|invalid)\\b"
+    match: "\\b(estabilished|invalid|new|related|untracked)\\b"
     name: "constant.other.routeros.connection-state"
+  }
+  {
+    include: "#connection_types"
+    name: "constant.other.routeros.connection-type"
+  }
+  {
+    include: "#firewall_chains"
+    name: "constant.other.routeros.chain"
+  }
+  {
+    include: "#firewall_actions"
+    name: "constant.other.routeros.action"
   }
 ]
 repository:
+  mac_address:
+    patterns: [
+      {
+        match: "\\b(1:)?([0-9A-Fa-f]{1,2}[:-]){5}([0-9A-Fa-f]){2}\\b"
+        name: "storage.modifier.routeros.mac"
+      }
+    ]
+  ipv4_address:
+    patterns: [
+      {
+        match: "\\b((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\b"
+        name: "variable.other.routeros.ipv4"
+      }
+    ]
+  ipv4_address_with_mask:
+    patterns: [
+      {
+        match: "((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\b\/(3[0-2]|[1-2][0-9]|\\d)\\b"
+        name: "variable.other.routeros.ipv4-with-mask"
+      }
+    ]
+  ipv6_address:
+    patterns: [
+      {
+        match: "\\b(?:(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){6})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:::(?:(?:(?:[0-9a-fA-F]{1,4})):){5})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){4})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,1}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){3})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,2}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:(?:[0-9a-fA-F]{1,4})):){2})(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,3}(?:(?:[0-9a-fA-F]{1,4})))?::(?:(?:[0-9a-fA-F]{1,4})):)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,4}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9]))\\.){3}(?:(?:25[0-5]|(?:[1-9]|1[0-9]|2[0-4])?[0-9])))))))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,5}(?:(?:[0-9a-fA-F]{1,4})))?::)(?:(?:[0-9a-fA-F]{1,4})))|(?:(?:(?:(?:(?:(?:[0-9a-fA-F]{1,4})):){0,6}(?:(?:[0-9a-fA-F]{1,4})))?::))))\\b"
+        name: "variable.other.routeros.ipv6"
+      }
+    ]
+  firewall_chains:
+    patterns: [
+      {
+        match: "\\b(dstnat|forward|input|output|postrouting|prerouting|srcnat)\\b"
+        name: "constant.other.routeros.chain"
+      }
+    ]
+  connection_types:
+    patterns: [
+      {
+        match: "\\b(ftp|h323|ircc|pptp|quake3|sip|tftp)\\b"
+        name: "constant.other.routeros.connection-type"
+      }
+    ]
+  firewall_actions:
+    patterns: [
+      {
+        match: "\\b(accept|add-dst-to-address-list|add-src-to-address-list|change-dscp|change-mss|change-ttl|clear-df|drop|dst-nat|fasttrack-connection|jump|log|mark-connection|mark-packet|mark-routing|masquerade|netmap|passthrough|redirect|reject|return|route|same|set-priority|sniff-pc|sniff-tzsp|src-nat|strip-ipv4-options|tarpit)\\b"
+        name: "constant.other.routeros.action"
+      }
+    ]
   other_keywords:
     patterns: [
       {
-        match: "\\b(aaa|accessible-via-web|accounting|account-local-traffic|ac-name|action|active-flow-timeout|active-mode|add-default-route|ageing-time|align|always-from-cache|area|area-id|arp|as|authenticate|authoritative|automatic-supout|auto-negotiation|autonomous|auto-send-supout|backup-allowed|bandwidth-server|baud-rate|bfd|bidirectional-timeout|blank-interval|bootp-support|bridge-mode|broadcast|broadcast-addresses|cable-settings|cache-administrator|cache-entries|cache-hit-dscp|cache-max-ttl|cache-on-disk|cache-size|chain|channel|channel-time|check-interval|cipher|client|client-to-client-reflection|comment|community|config|connection|connection-bytes|connection-idle-timeout|connection-state|console|contact|contrast|cpu|customer|data-bits|default|default-ap-tx-limit|default-client-tx-limit|default-forwarding|default-group|default-profile|default-route-distance|dhcp-client|dhcp-option|dhcp-server|dh-group|dial-on-demand|directory|disabled|disable-running-check|discovery|disk-file-count|disk-file-name|disk-lines-per-file|disk-stop-on-full|display-time|distance|distribute-default|distribute-for-default-route|domain|dpd-interval|dpd-maximum-failures|dynamic-label-range|eap-methods|e-mail|enabled|enc-algorithm|enc-algorithms|encryption-password|encryption-protocol|engine-id|exchange-mode|exclude-groups|file-limit|file-name|filter|filter-port|filter-stream|firewall|firmware|flow-control|forward-delay|frame-size|frames-per-second|from|full-duplex|garbage-timer|gateway|gateway-class|gateway-keepalive|gateway-selection|generate-policy|generic-timeout|gps|graphing|group|group-ciphers|group-key-update|hardware|hash-algorithm|health|hide-ssid|hop-limit|hotspot|hotspot-address|html-directory|http-cookie-lifetime|http-proxy|icmp-timeout|identity|idle-timeout|igmp-proxy|ignore-as-path-len|inactive-flow-timeout|incoming|in-filter|in-interface|instance|interface|interfaces|interim-update|interval|ipsec-protocols|irq|jump-target|keepalive-timeout|keep-max-sms|kind|l2mtu|latency-distribution-scale|lcd|lease-time|level|lifebytes|lifetime|line-count|list|local-address|location|logging|login|login-by|log-prefix|loop-detect|lsr-id|managed-address-configuration|management-protection|management-protection-key|mangle|manual|manycast|max-cache-size|max-fresh-time|max-message-age|max-mru|max-mtu|max-sessions|max-station-count|memory-limit|memory-lines|memory-scroll|memory-stop-on-full|metric-connected|metric-default|metric-static|min-rx|mirror|mme|mode|mpls|mpls-mtu|mq-pfifo-limit|mrru|mtu|multicast|multi-cpu|multiple-channels|multiplier|my-id-user-fqdn|name|nat|nat-traversal|nd|neighbor|netmask|network|no-ping-delay|note|on-backup|only-headers|only-one|on-master|origination-interval|other-configuration|out-filter|out-interface|page|page-refresh|parent|parent-proxy|parent-proxy-port|parity|passthrough|password|path-vector-limit|peer|permissions|pfifo-limit|pfs-group|policy|pool|port|ports|preemption-mode|preferred-gateway|preferred-lifetime|prefix|priority|profile|propagate-ttl|proposal|proposal-check|proprietary-extensions|protocol|protocol-mode|proxy|query-interval|query-response-interval|queue|quick-leave|ranges|rate-limit|reachable-time|read-access|read-only|receive-all|receive-enabled|receive-errors|remember|remote|remote-address|remote-port|remote-ipv6-prefix-pool|resource|retransmit-interval|route|router-id|routing|routing-table|sa-dst-address|sa-src-address|scope|screen|script|secret|send-initial-contact|set-system-time|settings|sfq-allot|sfq-perturb|shared-users|shares|show-at-login|show-dummy-rule|signup-allowed|sip-direct-media|skin|sms|sniffer|snooper|socks|source|speed|split-user-domain|ssid|ssid-all|state-after-reboot|status-autorefresh|stop-bits|store-every|store-leases-disk|supplicant-identity|system|target|target-scope|term|test-id|threshold|timeout|timeout-timer|to-addresses|tool|topics|tracking|traffic-flow|traffic-generator|transmit-hold-count|transparent-proxy|transport-address|ttl|tunnel|type|unicast-ciphers|upgrade|upnp|user-manager|users|v3-protocol|valid-lifetime|vcno|version|vrid|watch-address|watchdog|watchdog-timer|web-access|wireless|address|address-list|address-pool|addresses-per-mac|admin-mac|advertise-mac-address|auto-mac|filter-mac|filter-mac-address|filter-mac-protocol|mac-addressmac-server|mac-winbox|advertise-dns|dns-name|dns-server|use-peer-dns|allow|allow-disable-external-interface|allowed-number|allow-guests|allow-remote-requests|audio-max|audio-min|audio-monitor|auth|auth-algorithms|auth-method|authentication|authentication-password|authentication-protocol|authentication-types|default-authentication|bsd-syslog|syslog-facility|syslog-severity|clock|time-zone|time-zone-name|connection-mark|new-connection-mark|new-packet-mark|new-routing-mark|routing-mark|dst-address|dst-address-list|dst-delta|dst-end|dst-port|dst-start|max-client-connections|max-connections|max-server-connections|serialize-connections|metric-ospf|metric-other-ospf|redistribute-ospf|redistribute-other-ospf|metric-rip|redistribute-rip|ripng|ntp-server|primary-ntp|secondary-ntp|use-peer-ntp|paypal-accept-pending|paypal-allowed|paypal-secure-response|primary-server|secondary-server|ra-delay|ra-interval|ra-lifetime|radius|radius-eap-accounting|radius-mac-accounting|radius-mac-authentication|radius-mac-caching|radius-mac-format|radius-mac-mode|red-avg-packet|red-burst|red-limit|red-max-threshold|red-min-threshold|redistribute-connected|redistribute-static|require-client-certificate|tls-certificate|tls-mode|verify-client-certificate|security|security-profile|security-profiles|server|servers|service|service-name|service-port|smtp-server|wins-server|src-address|src-address-list|src-port|static-algo-0|static-algo-1|static-algo-2|static-algo-3|static-sta-private-algo|static-key-0|static-key-1|static-key-2|static-key-3|static-sta-private-key|static-transmit-key|streaming-enabled|streaming-max-rate|streaming-server|switch-to-spt|switch-to-spt-bytes|switch-to-spt-interval|trap-generators|trap-target|trap-version|update-stats-interval|update-timer|use-compression|use-encryption|use-explicit-null|use-ipv6|use-mpls|use-radius|use-service-tag|use-vj-compression|wmm-support|wpa-pre-shared-key|wpa2-pre-shared-key|write-access|metric-bgp|redistribute-bgp|redistribute-other-bgp|change-tcp-mss|tcp-close-timeout|tcp-close-wait-timeout|tcp-established-timeout|tcp-fin-wait-timeout|tcp-last-ack-timeout|tcp-syn-received-timeout|tcp-syn-sent-timeout|tcp-syncookie|tcp-time-wait-timeout|allocate-udp-ports-from|max-udp-packet-size|udp-stream-timeout|udp-timeout|use-ip-firewall-for-vlan|vlan-id|filter-ip-address|filter-ip-protocol|use-ip-firewall-for-pppoe|use-ip-firewall|wds-cost-range|wds-default-bridge|wds-default-cost|wds-ignore-ssid|wds-mode|job|environment)\\b"
+        match: "\\b(aaa|accessible-via-web|accounting|account-local-traffic|ac-name|action|active-flow-timeout|active-mode|add-default-route|ageing-time|align|always-from-cache|area|area-id|arp|as|authenticate|authoritative|automatic-supout|auto-negotiation|autonomous|auto-send-supout|backup-allowed|bandwidth-server|baud-rate|bfd|bidirectional-timeout|blank-interval|bootp-support|bridge-mode|broadcast|broadcast-addresses|cable-settings|cache-administrator|cache-entries|cache-hit-dscp|cache-max-ttl|cache-on-disk|cache-size|chain|channel|channel-time|check-interval|cipher|client|client-to-client-reflection|comment|community|config|connection-bytes|connection-idle-timeout|connection-state|connection-type|connection|console|contact|contrast|cpu|customer|data-bits|default|default-ap-tx-limit|default-client-tx-limit|default-forwarding|default-group|default-profile|default-route-distance|dhcp-client|dhcp-option|dhcp-server|dh-group|dial-on-demand|directory|disabled|disable-running-check|discovery|disk-file-count|disk-file-name|disk-lines-per-file|disk-stop-on-full|display-time|distance|distribute-default|distribute-for-default-route|domain|dpd-interval|dpd-maximum-failures|dynamic-label-range|eap-methods|e-mail|enabled|enc-algorithm|enc-algorithms|encryption-password|encryption-protocol|engine-id|exchange-mode|exclude-groups|file-limit|file-name|filter|filter-port|filter-stream|firewall|firmware|flow-control|forward-delay|frame-size|frames-per-second|from|full-duplex|garbage-timer|gateway|gateway-class|gateway-keepalive|gateway-selection|generate-policy|generic-timeout|gps|graphing|group|group-ciphers|group-key-update|hardware|hash-algorithm|health|hide-ssid|hop-limit|hotspot|hotspot-address|html-directory|http-cookie-lifetime|http-proxy|icmp-timeout|identity|idle-timeout|igmp-proxy|ignore-as-path-len|inactive-flow-timeout|incoming|in-filter|in-interface|instance|interface|interfaces|interim-update|interval|ipsec-protocols|irq|jump-target|keepalive-timeout|keep-max-sms|kind|l2mtu|latency-distribution-scale|lcd|lease-time|level|lifebytes|lifetime|line-count|list|local-address|location|logging|login|login-by|log-prefix|loop-detect|lsr-id|managed-address-configuration|management-protection|management-protection-key|mangle|manual|manycast|max-cache-size|max-fresh-time|max-message-age|max-mru|max-mtu|max-sessions|max-station-count|memory-limit|memory-lines|memory-scroll|memory-stop-on-full|metric-connected|metric-default|metric-static|min-rx|mirror|mme|mode|mpls|mpls-mtu|mq-pfifo-limit|mrru|mtu|multicast|multi-cpu|multiple-channels|multiplier|my-id-user-fqdn|name|nat|nat-traversal|nd|neighbor|netmask|network|no-ping-delay|note|on-backup|only-headers|only-one|on-master|origination-interval|other-configuration|out-filter|out-interface|page|page-refresh|parent|parent-proxy|parent-proxy-port|parity|passthrough|password|path-vector-limit|peer|permissions|pfifo-limit|pfs-group|policy|pool|port|ports|preemption-mode|preferred-gateway|preferred-lifetime|prefix|priority|profile|propagate-ttl|proposal|proposal-check|proprietary-extensions|protocol|protocol-mode|proxy|query-interval|query-response-interval|queue|quick-leave|ranges|rate-limit|reachable-time|read-access|read-only|receive-all|receive-enabled|receive-errors|remember|remote|remote-address|remote-port|remote-ipv6-prefix-pool|resource|retransmit-interval|route|router-id|routing|routing-table|sa-dst-address|sa-src-address|scope|screen|script|secret|send-initial-contact|set-system-time|settings|sfq-allot|sfq-perturb|shared-users|shares|show-at-login|show-dummy-rule|signup-allowed|sip-direct-media|skin|sms|sniffer|snooper|socks|source|speed|split-user-domain|ssid|ssid-all|state-after-reboot|status-autorefresh|stop-bits|store-every|store-leases-disk|supplicant-identity|system|target|target-scope|term|test-id|threshold|timeout|timeout-timer|to-addresses|tool|topics|tracking|traffic-flow|traffic-generator|transmit-hold-count|transparent-proxy|transport-address|ttl|tunnel|type|unicast-ciphers|upgrade|upnp|user-manager|users|v3-protocol|valid-lifetime|vcno|version|vrid|watch-address|watchdog|watchdog-timer|web-access|wireless|address|address-list|address-pool|addresses-per-mac|admin-mac|advertise-mac-address|auto-mac|filter-mac|filter-mac-address|filter-mac-protocol|mac-addressmac-server|mac-winbox|advertise-dns|dns-name|dns-server|use-peer-dns|allow|allow-disable-external-interface|allowed-number|allow-guests|allow-remote-requests|audio-max|audio-min|audio-monitor|auth|auth-algorithms|auth-method|authentication|authentication-password|authentication-protocol|authentication-types|default-authentication|bsd-syslog|syslog-facility|syslog-severity|clock|time-zone|time-zone-name|connection-mark|new-connection-mark|new-packet-mark|new-routing-mark|routing-mark|dst-address|dst-address-list|dst-delta|dst-end|dst-port|dst-start|max-client-connections|max-connections|max-server-connections|serialize-connections|metric-ospf|metric-other-ospf|redistribute-ospf|redistribute-other-ospf|metric-rip|redistribute-rip|ripng|ntp-server|primary-ntp|secondary-ntp|use-peer-ntp|paypal-accept-pending|paypal-allowed|paypal-secure-response|primary-server|secondary-server|ra-delay|ra-interval|ra-lifetime|radius|radius-eap-accounting|radius-mac-accounting|radius-mac-authentication|radius-mac-caching|radius-mac-format|radius-mac-mode|red-avg-packet|red-burst|red-limit|red-max-threshold|red-min-threshold|redistribute-connected|redistribute-static|require-client-certificate|tls-certificate|tls-mode|verify-client-certificate|security|security-profile|security-profiles|server|servers|service|service-name|service-port|smtp-server|wins-server|src-address-list|src-address|src-port|static-algo-0|static-algo-1|static-algo-2|static-algo-3|static-sta-private-algo|static-key-0|static-key-1|static-key-2|static-key-3|static-sta-private-key|static-transmit-key|streaming-enabled|streaming-max-rate|streaming-server|switch-to-spt|switch-to-spt-bytes|switch-to-spt-interval|trap-generators|trap-target|trap-version|update-stats-interval|update-timer|use-compression|use-encryption|use-explicit-null|use-ipv6|use-mpls|use-radius|use-service-tag|use-vj-compression|wmm-support|wpa-pre-shared-key|wpa2-pre-shared-key|write-access|metric-bgp|redistribute-bgp|redistribute-other-bgp|change-tcp-mss|tcp-close-timeout|tcp-close-wait-timeout|tcp-established-timeout|tcp-fin-wait-timeout|tcp-last-ack-timeout|tcp-syn-received-timeout|tcp-syn-sent-timeout|tcp-syncookie|tcp-time-wait-timeout|allocate-udp-ports-from|max-udp-packet-size|udp-stream-timeout|udp-timeout|use-ip-firewall-for-vlan|vlan-id|filter-ip-address|filter-ip-protocol|use-ip-firewall-for-pppoe|use-ip-firewall|wds-cost-range|wds-default-bridge|wds-default-cost|wds-ignore-ssid|wds-mode|job|environment)\\b"
         name: "keyword.other.routeros"
       }
     ]
