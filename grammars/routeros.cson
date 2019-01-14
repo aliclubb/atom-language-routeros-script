@@ -17,8 +17,12 @@ patterns: [
     name: "storage.modifier.routeros.mac"
   }
   {
-    match: "\\/{1}(certificate|console|disk|driver|dude|file|interface|ip|ipv6|lcd|log|mpls|partitions|port|ppp|queue|radius|routing|snmp|special-login|system|tool|user)\\b"
+    include: "#root_menus"
     name: "support.function.builtin.routeros.root-menu"
+  }
+  {
+    match: "\\b(filter|mangle|nat|raw)$\\b"
+    name: "support.function.builtin.routeros.firewall-submenu"
   }
   {
     match: "\\b(if|else|for|foreach|do|while)\\b"
@@ -27,6 +31,10 @@ patterns: [
   {
     include: "#other_keywords"
     name: "keyword.other.routeros"
+  }
+  {
+    include: "#sub_menus_certificate"
+    name: "support.function.builtin.routeros.sub-menu.certificate"
   }
   {
     match: "\\b(and|or|not|in|&&|\\!|\\|\\|)\\b"
@@ -59,6 +67,10 @@ patterns: [
   {
     match: "\\b(len|setup|typeof|toarray|tobool|toid|toip|toip6|tonum|tostr|totime)\\b"
     name: "support.function.builtin.routeros"
+  }
+  {
+    include: "#firewall_actions"
+    name: "constant.other.routeros.action"
   }
   {
     match: "\\b(accept|add|beep|delay|do|drop|execute|export|find|get|import|log|parse|pick|ping|print|put|quit|redirect|redo|resolve|set|undo)\\b"
@@ -130,7 +142,7 @@ patterns: [
     name: "variable.parameter"
   }
   {
-    match: "\\b(bgp|dccp|ddp|egp|encap|etherip|ggp|gre|hmp|icmp|icmpv6|idpr-cmtp|igmp|ipencap|ip|ipsec-ah|ipsec-esp|ipsec|ipv6-frag|ipv6-nonxt|ipv6-opts|ipv6-route|ipv6|iso-tp4|ldp|l2tp|ospf|ospf-v3|ppp|pup|rdp|rip|rspf|rsvp|sctp|snmp|st|tcp|udp-lite|udp|vmtp|vrrp|xns-idp|xtp)\\b"
+    include: "#protocols"
     name: "constant.other.routeros.protocol"
   }
   {
@@ -138,7 +150,7 @@ patterns: [
     name: "constant.other.routeros.service"
   }
   {
-    match: "\\b(6to4|bonding|bridge|eoipv6|eoip|ethernet|gre|gre6|ipip|ipipv6|isdn-client|isdn-server|l2tp-client|l2tp-server|lte|mesh|ovpn-client|ovpn-server|ppp-client|pppoe-client|pppoe-server|ppp-server|pptp-client|pptp-server|sstp-client|sstp-server|traffic-eng|vlan|vpls|vrrp)\\b"
+    include: "#interface_types"
     name: "constant.other.routeros.interface"
   }
   {
@@ -153,17 +165,34 @@ patterns: [
     include: "#firewall_chains"
     name: "constant.other.routeros.chain"
   }
-  {
-    include: "#firewall_actions"
-    name: "constant.other.routeros.action"
-  }
 ]
 repository:
-  mac_address:
+  connection_types:
     patterns: [
       {
-        match: "\\b(1:)?([0-9A-Fa-f]{1,2}[:-]){5}([0-9A-Fa-f]){2}\\b"
-        name: "storage.modifier.routeros.mac"
+        match: "\\b(ftp|h323|ircc|pptp|quake3|sip|tftp)\\b"
+        name: "constant.other.routeros.connection-type"
+      }
+    ]
+  firewall_actions:
+    patterns: [
+      {
+        match: "\\b(accept|add-dst-to-address-list|add-src-to-address-list|change-dscp|change-mss|change-ttl|clear-df|drop|dst-nat|fasttrack-connection|jump|log|mark-connection|mark-packet|mark-routing|masquerade|netmap|passthrough|redirect|reject|return|route|same|set-priority|sniff-pc|sniff-tzsp|src-nat|strip-ipv4-options|tarpit)\\b"
+        name: "constant.other.routeros.action"
+      }
+    ]
+  firewall_chains:
+    patterns: [
+      {
+        match: "\\b(dstnat|forward|input|output|postrouting|prerouting|srcnat)\\b"
+        name: "constant.other.routeros.chain"
+      }
+    ]
+  interface_types:
+    patterns: [
+      {
+        match: "\\b(6to4|bonding|bridge|eoipv6|eoip|ethernet|gre|gre6|ipip|ipipv6|isdn-client|isdn-server|l2tp-client|l2tp-server|lte|mesh|ovpn-client|ovpn-server|ppp-client|pppoe-client|pppoe-server|ppp-server|pptp-client|pptp-server|sstp-client|sstp-server|traffic-eng|vlan|vpls|vrrp)\\b"
+        name: "constant.other.routeros.interface"
       }
     ]
   ipv4_address:
@@ -187,32 +216,32 @@ repository:
         name: "variable.other.routeros.ipv6"
       }
     ]
-  firewall_chains:
+  mac_address:
     patterns: [
       {
-        match: "\\b(dstnat|forward|input|output|postrouting|prerouting|srcnat)\\b"
-        name: "constant.other.routeros.chain"
-      }
-    ]
-  connection_types:
-    patterns: [
-      {
-        match: "\\b(ftp|h323|ircc|pptp|quake3|sip|tftp)\\b"
-        name: "constant.other.routeros.connection-type"
-      }
-    ]
-  firewall_actions:
-    patterns: [
-      {
-        match: "\\b(accept|add-dst-to-address-list|add-src-to-address-list|change-dscp|change-mss|change-ttl|clear-df|drop|dst-nat|fasttrack-connection|jump|log|mark-connection|mark-packet|mark-routing|masquerade|netmap|passthrough|redirect|reject|return|route|same|set-priority|sniff-pc|sniff-tzsp|src-nat|strip-ipv4-options|tarpit)\\b"
-        name: "constant.other.routeros.action"
+        match: "\\b(1:)?([0-9A-Fa-f]{1,2}[:-]){5}([0-9A-Fa-f]){2}\\b"
+        name: "storage.modifier.routeros.mac"
       }
     ]
   other_keywords:
     patterns: [
       {
-        match: "\\b(aaa|accessible-via-web|accounting|account-local-traffic|ac-name|action|active-flow-timeout|active-mode|add-default-route|ageing-time|align|always-from-cache|area|area-id|arp|as|authenticate|authoritative|automatic-supout|auto-negotiation|autonomous|auto-send-supout|backup-allowed|bandwidth-server|baud-rate|bfd|bidirectional-timeout|blank-interval|bootp-support|bridge-mode|broadcast|broadcast-addresses|cable-settings|cache-administrator|cache-entries|cache-hit-dscp|cache-max-ttl|cache-on-disk|cache-size|chain|channel|channel-time|check-interval|cipher|client|client-to-client-reflection|comment|community|config|connection-bytes|connection-idle-timeout|connection-state|connection-type|connection|console|contact|contrast|cpu|customer|data-bits|default|default-ap-tx-limit|default-client-tx-limit|default-forwarding|default-group|default-profile|default-route-distance|dhcp-client|dhcp-option|dhcp-server|dh-group|dial-on-demand|directory|disabled|disable-running-check|discovery|disk-file-count|disk-file-name|disk-lines-per-file|disk-stop-on-full|display-time|distance|distribute-default|distribute-for-default-route|domain|dpd-interval|dpd-maximum-failures|dynamic-label-range|eap-methods|e-mail|enabled|enc-algorithm|enc-algorithms|encryption-password|encryption-protocol|engine-id|exchange-mode|exclude-groups|file-limit|file-name|filter|filter-port|filter-stream|firewall|firmware|flow-control|forward-delay|frame-size|frames-per-second|from|full-duplex|garbage-timer|gateway|gateway-class|gateway-keepalive|gateway-selection|generate-policy|generic-timeout|gps|graphing|group|group-ciphers|group-key-update|hardware|hash-algorithm|health|hide-ssid|hop-limit|hotspot|hotspot-address|html-directory|http-cookie-lifetime|http-proxy|icmp-timeout|identity|idle-timeout|igmp-proxy|ignore-as-path-len|inactive-flow-timeout|incoming|in-filter|in-interface|instance|interface|interfaces|interim-update|interval|ipsec-protocols|irq|jump-target|keepalive-timeout|keep-max-sms|kind|l2mtu|latency-distribution-scale|lcd|lease-time|level|lifebytes|lifetime|line-count|list|local-address|location|logging|login|login-by|log-prefix|loop-detect|lsr-id|managed-address-configuration|management-protection|management-protection-key|mangle|manual|manycast|max-cache-size|max-fresh-time|max-message-age|max-mru|max-mtu|max-sessions|max-station-count|memory-limit|memory-lines|memory-scroll|memory-stop-on-full|metric-connected|metric-default|metric-static|min-rx|mirror|mme|mode|mpls|mpls-mtu|mq-pfifo-limit|mrru|mtu|multicast|multi-cpu|multiple-channels|multiplier|my-id-user-fqdn|name|nat|nat-traversal|nd|neighbor|netmask|network|no-ping-delay|note|on-backup|only-headers|only-one|on-master|origination-interval|other-configuration|out-filter|out-interface|page|page-refresh|parent|parent-proxy|parent-proxy-port|parity|passthrough|password|path-vector-limit|peer|permissions|pfifo-limit|pfs-group|policy|pool|port|ports|preemption-mode|preferred-gateway|preferred-lifetime|prefix|priority|profile|propagate-ttl|proposal|proposal-check|proprietary-extensions|protocol|protocol-mode|proxy|query-interval|query-response-interval|queue|quick-leave|ranges|rate-limit|reachable-time|read-access|read-only|receive-all|receive-enabled|receive-errors|remember|remote|remote-address|remote-port|remote-ipv6-prefix-pool|resource|retransmit-interval|route|router-id|routing|routing-table|sa-dst-address|sa-src-address|scope|screen|script|secret|send-initial-contact|set-system-time|settings|sfq-allot|sfq-perturb|shared-users|shares|show-at-login|show-dummy-rule|signup-allowed|sip-direct-media|skin|sms|sniffer|snooper|socks|source|speed|split-user-domain|ssid|ssid-all|state-after-reboot|status-autorefresh|stop-bits|store-every|store-leases-disk|supplicant-identity|system|target|target-scope|term|test-id|threshold|timeout|timeout-timer|to-addresses|tool|topics|tracking|traffic-flow|traffic-generator|transmit-hold-count|transparent-proxy|transport-address|ttl|tunnel|type|unicast-ciphers|upgrade|upnp|user-manager|users|v3-protocol|valid-lifetime|vcno|version|vrid|watch-address|watchdog|watchdog-timer|web-access|wireless|address|address-list|address-pool|addresses-per-mac|admin-mac|advertise-mac-address|auto-mac|filter-mac|filter-mac-address|filter-mac-protocol|mac-addressmac-server|mac-winbox|advertise-dns|dns-name|dns-server|use-peer-dns|allow|allow-disable-external-interface|allowed-number|allow-guests|allow-remote-requests|audio-max|audio-min|audio-monitor|auth|auth-algorithms|auth-method|authentication|authentication-password|authentication-protocol|authentication-types|default-authentication|bsd-syslog|syslog-facility|syslog-severity|clock|time-zone|time-zone-name|connection-mark|new-connection-mark|new-packet-mark|new-routing-mark|routing-mark|dst-address|dst-address-list|dst-delta|dst-end|dst-port|dst-start|max-client-connections|max-connections|max-server-connections|serialize-connections|metric-ospf|metric-other-ospf|redistribute-ospf|redistribute-other-ospf|metric-rip|redistribute-rip|ripng|ntp-server|primary-ntp|secondary-ntp|use-peer-ntp|paypal-accept-pending|paypal-allowed|paypal-secure-response|primary-server|secondary-server|ra-delay|ra-interval|ra-lifetime|radius|radius-eap-accounting|radius-mac-accounting|radius-mac-authentication|radius-mac-caching|radius-mac-format|radius-mac-mode|red-avg-packet|red-burst|red-limit|red-max-threshold|red-min-threshold|redistribute-connected|redistribute-static|require-client-certificate|tls-certificate|tls-mode|verify-client-certificate|security|security-profile|security-profiles|server|servers|service|service-name|service-port|smtp-server|wins-server|src-address-list|src-address|src-port|static-algo-0|static-algo-1|static-algo-2|static-algo-3|static-sta-private-algo|static-key-0|static-key-1|static-key-2|static-key-3|static-sta-private-key|static-transmit-key|streaming-enabled|streaming-max-rate|streaming-server|switch-to-spt|switch-to-spt-bytes|switch-to-spt-interval|trap-generators|trap-target|trap-version|update-stats-interval|update-timer|use-compression|use-encryption|use-explicit-null|use-ipv6|use-mpls|use-radius|use-service-tag|use-vj-compression|wmm-support|wpa-pre-shared-key|wpa2-pre-shared-key|write-access|metric-bgp|redistribute-bgp|redistribute-other-bgp|change-tcp-mss|tcp-close-timeout|tcp-close-wait-timeout|tcp-established-timeout|tcp-fin-wait-timeout|tcp-last-ack-timeout|tcp-syn-received-timeout|tcp-syn-sent-timeout|tcp-syncookie|tcp-time-wait-timeout|allocate-udp-ports-from|max-udp-packet-size|udp-stream-timeout|udp-timeout|use-ip-firewall-for-vlan|vlan-id|filter-ip-address|filter-ip-protocol|use-ip-firewall-for-pppoe|use-ip-firewall|wds-cost-range|wds-default-bridge|wds-default-cost|wds-ignore-ssid|wds-mode|job|environment)\\b"
+        match: "\\b(aaa|accessible-via-web|accounting|account-local-traffic|ac-name|action|active-flow-timeout|active-mode|add-default-route|ageing-time|align|always-from-cache|area|area-id|arp|as|authenticate|authoritative|automatic-supout|auto-negotiation|autonomous|auto-send-supout|backup-allowed|bandwidth-server|baud-rate|bfd|bidirectional-timeout|blank-interval|bootp-support|bridge-mode|broadcast|broadcast-addresses|cable-settings|cache-administrator|cache-entries|cache-hit-dscp|cache-max-ttl|cache-on-disk|cache-size|chain|channel|channel-time|check-interval|cipher|client|client-to-client-reflection|comment|community|config|connection-bytes|connection-idle-timeout|connection-state|connection-type|connection|console|contact|contrast|cpu|customer|data-bits|default|default-ap-tx-limit|default-client-tx-limit|default-forwarding|default-group|default-profile|default-route-distance|dhcp-client|dhcp-option|dhcp-server|dh-group|dial-on-demand|directory|disabled|disable-running-check|discovery|disk-file-count|disk-file-name|disk-lines-per-file|disk-stop-on-full|display-time|distance|distribute-default|distribute-for-default-route|domain|dpd-interval|dpd-maximum-failures|dynamic-label-range|eap-methods|e-mail|enabled|enc-algorithm|enc-algorithms|encryption-password|encryption-protocol|engine-id|exchange-mode|exclude-groups|file-limit|file-name|filter|filter-port|filter-stream|firewall|firmware|flow-control|forward-delay|frame-size|frames-per-second|from|full-duplex|garbage-timer|gateway|gateway-class|gateway-keepalive|gateway-selection|generate-policy|generic-timeout|gps|graphing|group|group-ciphers|group-key-update|hardware|hash-algorithm|health|hide-ssid|hop-limit|hotspot|hotspot-address|html-directory|http-cookie-lifetime|http-proxy|icmp-timeout|identity|idle-timeout|igmp-proxy|ignore-as-path-len|inactive-flow-timeout|incoming|in-filter|in-interface|instance|interface|interfaces|interim-update|interval|ipsec-protocols|irq|jump-target|keepalive-timeout|keep-max-sms|kind|l2mtu|latency-distribution-scale|lcd|lease-time|level|lifebytes|lifetime|line-count|list|local-address|location|logging|login|login-by|log-prefix|loop-detect|lsr-id|managed-address-configuration|management-protection|management-protection-key|mangle|manual|manycast|max-cache-size|max-fresh-time|max-message-age|max-mru|max-mtu|max-sessions|max-station-count|memory-limit|memory-lines|memory-scroll|memory-stop-on-full|metric-connected|metric-default|metric-static|min-rx|mirror|mme|mode|mpls|mpls-mtu|mq-pfifo-limit|mrru|mtu|multicast|multi-cpu|multiple-channels|multiplier|my-id-user-fqdn|name|nat|nat-traversal|nd|neighbor|netmask|network|no-ping-delay|note|on-backup|only-headers|only-one|on-master|origination-interval|other-configuration|out-filter|out-interface|page|page-refresh|parent|parent-proxy|parent-proxy-port|parity|passthrough|password|path-vector-limit|peer|permissions|pfifo-limit|pfs-group|policy|pool|port|ports|preemption-mode|preferred-gateway|preferred-lifetime|prefix|priority|profile|propagate-ttl|proposal|proposal-check|proprietary-extensions|protocol|protocol-mode|proxy|query-interval|query-response-interval|queue|quick-leave|ranges|rate-limit|reachable-time|read-access|read-only|receive-all|receive-enabled|receive-errors|remember|remote|remote-address|remote-port|remote-ipv6-prefix-pool|resource|retransmit-interval|route|router-id|routing|routing-table|sa-dst-address|sa-src-address|scope|screen|script|secret|send-initial-contact|set-system-time|settings|sfq-allot|sfq-perturb|shared-users|shares|show-at-login|show-dummy-rule|signup-allowed|sip-direct-media|skin|sms|sniffer|snooper|socks|source|speed|split-user-domain|ssid|ssid-all|state-after-reboot|status-autorefresh|stop-bits|store-every|store-leases-disk|supplicant-identity|system|target|target-scope|term|test-id|threshold|timeout|timeout-timer|to-addresses|tool|topics|tracking|traffic-flow|traffic-generator|transmit-hold-count|transparent-proxy|transport-address|ttl|tunnel|type|unicast-ciphers|upgrade|upnp|user-manager|users|v3-protocol|valid-lifetime|vcno|version|vrid|watch-address|watchdog|watchdog-timer|web-access|wireless|address-list|address-pool|addresses-per-mac|address|admin-mac|advertise-mac-address|auto-mac|filter-mac|filter-mac-address|filter-mac-protocol|mac-addressmac-server|mac-winbox|advertise-dns|dns-name|dns-server|use-peer-dns|allow|allow-disable-external-interface|allowed-number|allow-guests|allow-remote-requests|audio-max|audio-min|audio-monitor|auth|auth-algorithms|auth-method|authentication|authentication-password|authentication-protocol|authentication-types|default-authentication|bsd-syslog|syslog-facility|syslog-severity|clock|time-zone|time-zone-name|connection-mark|new-connection-mark|new-packet-mark|new-routing-mark|routing-mark|dst-address|dst-address-list|dst-delta|dst-end|dst-port|dst-start|max-client-connections|max-connections|max-server-connections|serialize-connections|metric-ospf|metric-other-ospf|redistribute-ospf|redistribute-other-ospf|metric-rip|redistribute-rip|ripng|ntp-server|primary-ntp|secondary-ntp|use-peer-ntp|paypal-accept-pending|paypal-allowed|paypal-secure-response|primary-server|secondary-server|ra-delay|ra-interval|ra-lifetime|radius|radius-eap-accounting|radius-mac-accounting|radius-mac-authentication|radius-mac-caching|radius-mac-format|radius-mac-mode|red-avg-packet|red-burst|red-limit|red-max-threshold|red-min-threshold|redistribute-connected|redistribute-static|require-client-certificate|tls-certificate|tls-mode|verify-client-certificate|security|security-profile|security-profiles|server|servers|service|service-name|service-port|smtp-server|wins-server|src-address-list|src-address|src-port|static-algo-0|static-algo-1|static-algo-2|static-algo-3|static-sta-private-algo|static-key-0|static-key-1|static-key-2|static-key-3|static-sta-private-key|static-transmit-key|streaming-enabled|streaming-max-rate|streaming-server|switch-to-spt|switch-to-spt-bytes|switch-to-spt-interval|trap-generators|trap-target|trap-version|update-stats-interval|update-timer|use-compression|use-encryption|use-explicit-null|use-ipv6|use-mpls|use-radius|use-service-tag|use-vj-compression|wmm-support|wpa-pre-shared-key|wpa2-pre-shared-key|write-access|metric-bgp|redistribute-bgp|redistribute-other-bgp|change-tcp-mss|tcp-close-timeout|tcp-close-wait-timeout|tcp-established-timeout|tcp-fin-wait-timeout|tcp-last-ack-timeout|tcp-syn-received-timeout|tcp-syn-sent-timeout|tcp-syncookie|tcp-time-wait-timeout|allocate-udp-ports-from|max-udp-packet-size|udp-stream-timeout|udp-timeout|use-ip-firewall-for-vlan|vlan-id|filter-ip-address|filter-ip-protocol|use-ip-firewall-for-pppoe|use-ip-firewall|wds-cost-range|wds-default-bridge|wds-default-cost|wds-ignore-ssid|wds-mode|job|environment)\\b="
         name: "keyword.other.routeros"
+      }
+    ]
+  protocols:
+    patterns: [
+      {
+        match: "\\b(bgp|dccp|ddp|egp|encap|etherip|ggp|gre|hmp|icmp|icmpv6|idpr-cmtp|igmp|ipencap|ip|ipsec-ah|ipsec-esp|ipsec|ipv6-frag|ipv6-nonxt|ipv6-opts|ipv6-route|ipv6|iso-tp4|ldp|l2tp|ospf|ospf-v3|ppp|pup|rdp|rip|rspf|rsvp|sctp|snmp|st|tcp|udp-lite|udp|vmtp|vrrp|xns-idp|xtp)\\b"
+        name: "constant.other.routeros.protocol"
+      }
+    ]
+  root_menus:
+    patterns: [
+      {
+        match: "\\/{1}(certificate|console|disk|driver|dude|file|interface|ip|ipv6|lcd|log|mpls|partitions|port|ppp|queue|radius|routing|snmp|special-login|system|tool|user)\\b"
+        name: "support.function.builtin.routeros.root-menu"
       }
     ]
   string_escaped_char:
@@ -224,6 +253,639 @@ repository:
       {
         match: "\\\\."
         name: "invalid.illegal.unknown-escape.routeros"
+      }
+    ]
+  sub_menus_certificate:
+    patterns: [
+      {
+        match: "\\b(crl|scep-server|settings)\\b"
+        name: "support.function.builtin.routeros.sub-menu.certificate"
+      }
+    ]
+  sub_menus_certificate_scepserver:
+    patterns: [
+      {
+        match: "\\b(otp|ra|requests)\\b"
+        name: "support.function.builtin.routeros.sub-menu.certificate.scep-server"
+      }
+    ]
+  sub_menus_interface:
+    patterns: [
+      {
+        match: "\\b(6to4|bonding|bridge|detect-internet|eoip|eoipv6|ethernet|gre|gre6|ipip|ipipv6|l2tp-client|l2tp-server|list|lte|mesh|ovpn-client|ovpn-server|ppp-client|ppp-server|pppoe-client|pppoe-server|pptp-client|pptp-server|sstp-client|sstp-server|traffic-eng|vlan|vpls|vrrp)\\b"
+        name: "support.function.builtin.routeros.sub-menu.interface"
+      }
+    ]
+  sub_menus_interface_bridge:
+    patterns: [
+      {
+        match: "\\b(calea|filter|host|mdb|msti|nat|port|settings|vlan)\\b"
+        name: "support.function.builtin.routeros.sub-menu.interface.bridge"
+      }
+    ]
+  sub_menus_interface_bridge_port:
+    patterns: [
+      {
+        match: "\\b(mst-override)\\b"
+        name: "support.function.builtin.routeros.sub-menu.interface.bridge.port"
+      }
+    ]
+  sub_menus_interface_detectinternet:
+    patterns: [
+      {
+        match: "\\b(state)\\b"
+        name: "support.function.builtin.routeros.sub-menu.interface.detect-internet"
+      }
+    ]
+  sub_menus_interface_ethernet:
+    patterns: [
+      {
+        match: "\\b(switch)\\"
+        name: "support.function.builtin.routeros.sub-menu.interfaces.ethernet"
+      }
+    ]
+  sub_menus_interface_ethernet_switch:
+    patterns: [
+      {
+        match: "\\b(host|port|rule|vlan)\\b"
+        name: "support.function.builtin.routeros.sub-menu.interface.ethernet.switch"
+      }
+    ]
+  sub_menus_interface_l2tpserver:
+    patterns: [
+      {
+        match: "\\b(server)\\b"
+        name: "support.function.builtin.routeros.sub-menu.interface.l2tp-server"
+      }
+    ]
+  sub_menus_interface_list:
+    patterns: [
+      {
+        match: "\\b(member)\\b"
+        name: "support.function.builtin.routeros.sub-menu.interface.list"
+      }
+    ]
+  sub_menus_interface_lte:
+    patterns: [
+      {
+        match: "\\b(apn)\\b"
+        name: "support.function.builtin.routeros.sub-menu.interface.lte"
+      }
+    ]
+  sub_menus_interface_mesh:
+    patterns: [
+      {
+        match: "\\b(fdb|port)\\b"
+        name: "support.function.builtin.routeros.sub-menu.interface.mesh"
+      }
+    ]
+  sub_menus_interface_ovpnserver:
+    patterns: [
+      {
+        match: "\\b(server)\\b"
+        name: "support.function.builtin.routeros.sub-menu.interface.ovpn-server"
+      }
+    ]
+  sub_menus_interface_pppoeserver:
+    patterns: [
+      {
+        match: "\\b(server)\\b"
+        name: "support.function.builtin.routeros.sub-menu.interface.pppoe-server"
+      }
+    ]
+  sub_menus_interface_pptpserver:
+    patterns: [
+      {
+        match: "\\b(server)\\b"
+        name: "support.function.builtin.routeros.sub-menu.interface.pptp-server"
+      }
+    ]
+  sub_menus_interface_sstpserver:
+    patterns: [
+      {
+        match: "\\b(server)\\b"
+        name: "support.function.builtin.routeros.sub-menu.interface.sstp-server"
+      }
+    ]
+  sub_menus_interface_vpls:
+    patterns: [
+      {
+        match: "\\b(bgp-vpls|cisco-bgp-vpls)\\b"
+        name: "support.function.builtin.routeros.sub-menu.interface.vpls"
+      }
+    ]
+  sub_menus_ip:
+    patterns: [
+      {
+        match: "\\b(accounting|address|arp|cloud|dhcp-client|dhcp-relay|dhcp-server|dns|firewall|hotspot|ipsec|kid-control|neighbor|packing|pool|proxy|route|service|settings|smb|socks|ssh|tftp|traffic-flow|upnp)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip"
+      }
+    ]
+  sub_menus_ip_accounting:
+    patterns: [
+      {
+        match: "\\b(snapshot|uncounted|web-access)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.accounting"
+      }
+    ]
+  sub_menus_ip_cloud:
+    patterns: [
+      {
+        match: "\\b(cloud)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.cloud"
+      }
+    ]
+  sub_menus_ip_dhcpclient:
+    patterns: [
+      {
+        match: "\\b(option)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.dhcp-client"
+      }
+    ]
+  sub_menus_ip_dhcpserver:
+    patterns: [
+      {
+        match: "\\b(alert|config|lease|network|option)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.dhcp-server"
+      }
+    ]
+  sub_menus_ip_dhcpserver_option:
+    patterns: [
+      {
+        match: "\\b(sets)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.dhcp-server.option"
+      }
+    ]
+  sub_menus_ip_dns:
+    patterns: [
+      {
+        match: "\\b(cache|static)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.dns"
+      }
+    ]
+  sub_menus_ip_dns_cache:
+    patterns: [
+      {
+        match: "\\b(all)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.dns.cache"
+      }
+    ]
+  sub_menus_ip_firewall:
+    patterns: [
+      {
+        match: "\\b(address-list|calea|connection|filter|layer7-protocol|mangle|nat|raw|service-port)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.firewall"
+      }
+    ]
+  sub_menus_ip_connection:
+    patterns: [
+      {
+        match: "\\b(tracking)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.firewall.connection"
+      }
+    ]
+  sub_menus_ip_hotspot:
+    patterns: [
+      {
+        match: "\\b(active|cookie|host|ip-binding|profile|service-port|user|walled-garden)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.hotspot"
+      }
+    ]
+  sub_menus_ip_hotspot_user:
+    patterns: [
+      match: "\\b(profile)\\b"
+      name: "support.function.builtin.routeros.sub-menu.ip.hotspot.user"
+    ]
+  sub_menus_ip_hotspot_walledgarden:
+    patterns: [
+      match: "\\b(ip)\\b"
+      name: "support.function.builtin.routeros.sub-menu.ip.hotspot.walled-garden"
+    ]
+  sub_menus_ip_ipsec:
+    patterns: [
+      {
+        match: "\\b(installed-sa|key|mode-config|peer|policy|proposal|remote-peers|statistics|user)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.ipsec"
+      }
+    ]
+  sub_menus_ip_ipsec_policy:
+    patterns: [
+      {
+        match: "\\b(group)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.ipsec.policy"
+      }
+    ]
+  sub_menus_ip_ipsec_user:
+    patterns: [
+      {
+        match: "\\b(settings)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.ipsec.user"
+      }
+    ]
+  sub_menus_ip_kidcontrol:
+    patterns: [
+      {
+        match: "\\b(device)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.kid-control"
+      }
+    ]
+  sub_menus_ip_neighbor:
+    patterns: [
+      {
+        match: "\\b(discovery-settings)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.neighbor"
+      }
+    ]
+  sub_menus_ip_pool:
+    patterns: [
+      {
+        match: "\\b(used)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.pool"
+      }
+    ]
+  sub_menus_ip_proxy:
+    patterns: [
+      {
+        match: "\\b(access|cache|cache-contents|connections|direct|inserts|lookup|refreshes)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.proxy"
+      }
+    ]
+  sub_menus_ip_route:
+    patterns: [
+      {
+        match: "\\b(cache|nexthop|rule|vrf)"
+        name: "support.function.builtin.routeros.sub-menu.ip.route"
+      }
+    ]
+  sub_menus_ip_smb:
+    patterns: [
+      {
+        match: "\\b(shares|users)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.smb"
+      }
+    ]
+  sub_menus_ip_socks:
+    patterns: [
+      {
+        match: "\\b(access|connections)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.socks"
+      }
+    ]
+  sub_menus_ip_trafficflow:
+    patterns: [
+      {
+        match: "\\b(ipfix|target)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.traffic-flow"
+      }
+    ]
+  sub_menus_ip_upnp:
+    patterns: [
+      {
+        match: "\\b(interfaces)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ip.upnp"
+      }
+    ]
+  sub_menus_ipv6:
+    patterns: [
+      {
+        match: "\\b(address|dhcp-client|dhcp-relay|dhcp-server|firewall|nd|neighbor|pool|route|settings)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ipv6"
+      }
+    ]
+  sub_menus_ipv6_dhcpclient:
+    patterns: [
+      {
+        match: "\\b(option)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ipv6.dhcp-client"
+      }
+    ]
+  sub_menus_ipv6_dhcpserver:
+    patterns: [
+      {
+        match: "\\b(binding|option)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ipv6.dhcp-server"
+      }
+    ]
+  sub_menus_ipv6_dhcpserver_option:
+    patterns: [
+      {
+        match: "\\b(sets)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ipv6.dhcp-server.option"
+      }
+    ]
+  sub_menus_ipv6_firewall:
+    patterns: [
+      {
+        match: "\\b(address-list|connection|filter|mangle|raw)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ipv6.firewall"
+      }
+    ]
+  sub_menus_ipv6_nd:
+    patterns: [
+      {
+        match: "\\b(prefix)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ipv6.nd"
+      }
+    ]
+  sub_menus_ipv6_nd_prefix:
+    patterns: [
+      {
+        match: "\\b(default)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ipv6.nd.prefix"
+      }
+    ]
+  sub_menus_ipv6_pool:
+    patterns: [
+      {
+        match: "\\b(used)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ipv6.pool"
+      }
+    ]
+  sub_menus_ipv6_route:
+    patterns: [
+      {
+        match: "\\b(cache)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ipv6.route"
+      }
+    ]
+  sub_menus_mpls:
+    patterns: [
+      {
+        match: "\\b(forwarding-table|interface|ldp|local-bindings|remote-bindings|traffic-eng)\\b"
+        name: "support.function.builtin.routeros.sub-menu.mpls"
+      }
+    ]
+  sub_menus_mpls_ldp:
+    patterns: [
+      {
+        match: "\\b(accept-filter|advertise-filter|interface|neighbor)\\b"
+        name: "support.function.builtin.routeros.sub-menu.mpls.ldp"
+      }
+    ]
+  sub_menus_mpls_trafficeng:
+    patterns: [
+      {
+        match: "\\b(interface|path-state|resv-state|tunnel-path)\\b"
+        name: "support.function.builtin.routeros.sub-menu.mpls.traffic-eng"
+      }
+    ]
+  sub_menus_port:
+    patterns: [
+      {
+        match: "\\b(firmware|remote-access)\\b"
+        name: "support.function.builtin.routeros.sub-menu.port"
+      }
+    ]
+  sub_menus_ppp:
+    patterns: [
+      {
+        match: "\\b(aaa|active|l2tp-secret|profile|secret)\\b"
+        name: "support.function.builtin.routeros.sub-menu.ppp"
+      }
+    ]
+  sub_menus_queue:
+    patterns: [
+      {
+        match: "\\b(interface|simple|tree|type)\\b"
+        name: "support.function.builtin.routeros.sub-menu.queue"
+      }
+    ]
+  sub_menus_radius:
+    patterns: [
+      {
+        match: "\\b(incoming)\\b"
+        name: "support.function.builtin.routeros.sub-menu.radius"
+      }
+    ]
+  sub_menus_routing:
+    patterns: [
+      {
+        match: "\\b(bfd|bgp|filter|mme|ospf|ospf-v3|prefix-lists|rip|ripng)\\b"
+        name: "support.function.builtin.routeros.sub-menu.routing"
+      }
+    ]
+  sub_menus_routing_bfd:
+    patterns: [
+      {
+        match: "\\b(interface|neighbor)\\b"
+        name: "support.function.builtin.routeros.sub-menu.routing.bfd"
+      }
+    ]
+  sub_menus_routing_bgp:
+    patterns: [
+      {
+        match: "\\b(advertisements|aggregate|instance|network|peer|vpn4-route)\\b"
+        name: "support.function.builtin.routeros.sub-menu.routing.bgp"
+      }
+    ]
+  sub_menus_routing_instance:
+    patterns: [
+      {
+        match: "\\b(vrf)\\b"
+        name: "support.function.builtin.routeros.sub-menu.routing.bgp.instance"
+      }
+    ]
+  sub_menus_routing_mme:
+    patterns: [
+      {
+        match: "\\b(interface|network|originators)\\b"
+        name: "support.function.builtin.routeros.sub-menu.routing.mme"
+      }
+    ]
+  sub_menus_routing_ospf:
+    patterns: [
+      {
+        match: "\\b(area|area-border-router|as-border-router|instance|interface|lsa|nbma-neighbor|neighbor|network|route|sham-link|virtual-link)\\b"
+        name: "support.function.builtin.routeros.sub-menu.routing.ospf"
+      }
+    ]
+  sub_menus_routing_ospf_area:
+    patterns: [
+      {
+        match: "\\b(range)\\b"
+        name: "support.function.builtin.routeros.sub-menu.routing.ospf.area"
+      }
+    ]
+  sub_menus_routing_ospfv3:
+    patterns: [
+      {
+        match: "\\b(area|as-border-router|instance|interface|lsa|nbma-neighbor|neighbor|ospf-router|route|virtual-link)\\b"
+        name: "support.function.builtin.routeros.sub-menu.routing.ospf-v3"
+      }
+    ]
+  sub_menus_routing_ospfv3_area:
+    patterns: [
+      {
+        match: "\\b(range)\\b"
+        name: "support.function.builtin.routeros.sub-menu.routing.ospf-v3.area"
+      }
+    ]
+  sub_menus_routing_rip:
+    patterns: [
+      {
+        match: "\\b(interface|keys|neighbor|network|route)\\b"
+        name: "support.function.builtin.routeros.sub-menu.routing.rip"
+      }
+    ]
+  sub_menus_routing_ripng:
+    patterns: [
+      {
+        match: "\\b(interface|route)\\b"
+        name: "support.function.builtin.routeros.sub-menu.routing.ripng"
+      }
+    ]
+  sub_menus_snmp:
+    patterns: [
+      {
+        match: "\\b(community)\\b"
+        name: "support.function.builtin.routeros.sub-menu.snmp"
+      }
+    ]
+  sub_menus_system:
+    patterns: [
+      {
+        match: "\\b(backup|clock|console|default-configuration|health|history|identity|leds|license|logging|note|ntp|package|resource|routerboard|scheduler|script|upgrade|watchdog)\\b"
+        name: "support.function.builtin.routeros.sub-menu.system"
+      }
+    ]
+  sub_menus_system_clock:
+    patterns: [
+      {
+        match: "\\b(manual)\\b"
+        name: "support.function.builtin.routeros.sub-menu.system"
+      }
+    ]
+  sub_menus_system_leds:
+    patterns: [
+      {
+        match: "\\b(settings)\\b"
+        name: "support.function.builtin.routeros.sub-menu.system.leds"
+      }
+    ]
+  sub_menus_system_logging:
+    patterns: [
+      {
+        match: "\\b(action)\\b"
+        name: "support.function.builtin.routeros.sub-menu.system.logging"
+      }
+    ]
+  sub_menus_system_ntp:
+    patterns: [
+      {
+        match: "\\b(client)\\b"
+        name: "support.function.builtin.routeros.sub-menu.system.ntp"
+      }
+    ]
+  sub_menus_system_package:
+    patterns: [
+      {
+        match: "\\b(update)\\b"
+        name: "support.function.builtin.routeros.sub-menu.system.package"
+      }
+    ]
+  sub_menus_system_resource:
+    patterns: [
+      {
+        match: "\\b(cpu|irq|pci)\\b"
+        name: "support.function.builtin.routeros.sub-menu.system.resource"
+      }
+    ]
+  sub_menus_system_routerboard:
+    patterns: [
+      {
+        match: "\\b(mode-button|settings)\\b"
+        name: "support.function.builtin.routeros.sub-menu.system.routerboard"
+      }
+    ]
+  sub_menus_system_scheduler:
+    patterns: [
+      {
+        match: "\\b(environment|job)\\b"
+        name: "support.function.builtin.routeros.sub-menu.system.scheduler"
+      }
+    ]
+  sub_menus_system_upgrade:
+    patterns: [
+      {
+        match: "\\b(mirror|upgrade-package-source)\\b"
+        name: "support.function.builtin.routeros.sub-menu.system.upgrade"
+      }
+    ]
+  sub_menus_tool:
+    patterns: [
+      {
+        match: "\\b(bandwidth-server|e-mail|graphing|mac-server|netwatch|romon|sms|sniffer|traffic-generator|traffic-monitor)\\b"
+        name: "support.function.builtin.routeros.sub-menu.tool"
+      }
+    ]
+  sub_menus_tool_bandwidthserver:
+    patterns: [
+      {
+        match: "\\b(session)\\b"
+        name: "support.function.builtin.routeros.sub-menu.tool.bandwidth-server"
+      }
+    ]
+  sub_menus_tool_graphing:
+    patterns: [
+      {
+        match: "\\b(interface|queue|resource)\\b"
+        name: "support.function.builtin.routeros.sub-menu.tool.graphing"
+      }
+    ]
+  sub_menus_tool_macserver:
+    patterns: [
+      {
+        match: "\\b(mac-winbox|ping|sessions)\\b"
+        name: "support.function.builtin.routeros.sub-menu.tool.mac-server"
+      }
+    ]
+  sub_menus_tool_romon:
+    patterns: [
+      {
+        match: "\\b(port)\\b"
+        name: "support.function.builtin.routeros.sub-menu.tool.romon"
+      }
+    ]
+  sub_menus_tool_sms:
+    patterns: [
+      {
+        match: "\\b(inbox)\\b"
+        name: "support.function.builtin.routeros.sub-menu.tool.sms"
+      }
+    ]
+  sub_menus_tool_sniffer:
+    patterns: [
+      {
+        match: "\\b(connection|host|packet|protocol)\\b"
+        name: "support.function.builtin.routeros.sub-menu.tool.sniffer"
+      }
+    ]
+  sub_menus_tool_trafficgenerator:
+    patterns: [
+      {
+        match: "\\b(packet-template|port|raw-packet-template|stats|stream)\\b"
+        name: "support.function.builtin.routeros.sub-menu.tool.traffic-generator"
+      }
+    ]
+  sub_menus_tool_trafficgenerator_stats:
+    patterns: [
+      {
+        match: "\\b(latency-distribution|port|raw|stream)\\b"
+        name: "support.function.builtin.routeros.sub-menu.tool.traffic-generator.stats"
+      }
+    ]
+  sub_menus_user:
+    patterns: [
+      {
+        match: "\\b(aaa|active|group|ssh-keys)\\b"
+        name: "support.function.builtin.routeros.sub-menu.user"
+      }
+    ]
+  sub_menus_user_sshkeys:
+    patterns: [
+      {
+        match: "\\b(private)\\b"
+        name: "support.function.builtin.routeros.sub-menu.user.ssh-keys"
       }
     ]
 scopeName: "source.routeros"
