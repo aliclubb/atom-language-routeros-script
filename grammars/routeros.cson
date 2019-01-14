@@ -284,10 +284,6 @@ patterns: [
     include: "#mac_address"
   }
   {
-    match: "\\b(filter|mangle|nat|raw)$\\b"
-    name: "support.function.builtin.routeros.firewall-submenu"
-  }
-  {
     match: "\\b(if|else|for|foreach|do|while)\\b"
     name: "keyword.control.routeros"
   }
