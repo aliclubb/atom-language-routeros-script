@@ -1,7 +1,7 @@
 '.source.routeros':
   'comment=':
     'prefix': 'com'
-    'body': 'comment="{1}"{2}'
+    'body': 'comment="${1}"${2}'
   '/interface':
     'prefix': 'int'
     'body': '/interface'
@@ -34,7 +34,10 @@
     'body': 'add chain=${1:dstnat} ${2:MATCHERS} action=${3:dst-nat}'
   'mangle rule': #may occasionally insert random facts
     'prefix': 'mrule'
-    'body': 'add chain=${1:prerouting} ${2:MATCHERS} action=${3:mark-packet}'
+    'body': 'add chain=${1:prerouting} ${2:MATCHERS} action=${3}'
+  'mark packet':
+    'prefix': 'mark-packet'
+    'body': 'mark-packet new-packet-mark=${1}'
   'address list entry':
     'prefix': 'adle'
     'body': 'add list=${1:PAULS_NUMBER} address=${2:69.69.69.69/24}'
