@@ -1,6 +1,6 @@
 {
   "name": "language-routeros",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "An updated version of Oleg Fomin's language-routeros-script package providing MikroTik RouterOS script language support in Atom",
   "keywords": [
     "routeros",
