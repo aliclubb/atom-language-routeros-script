@@ -1,4 +1,7 @@
 '.source.routeros':
+  'comment=':
+    'prefix': 'com'
+    'body': 'comment="{1}"{2}'
   '/interface':
     'prefix': 'int'
     'body': '/interface'
@@ -10,7 +13,7 @@
     'body': '/interface vrrp'
   'vlan':
     'prefix': 'vl'
-    'body': 'add name=${1} vlan-id=${2}${3: comment="${4}"}${5}'
+    'body': 'add name=${1} vlan-id=${2}'
   '/ip ... filter':
     'prefix': 'filt'
     'body': '/ip firewall filter'
@@ -34,7 +37,7 @@
     'body': 'add chain=${1:prerouting} ${2:MATCHERS} action=${3:mark-packet}'
   'address list entry':
     'prefix': 'adle'
-    'body': 'add address=${1:69.69.69.69/24} list=${2:PAULS_NUMBER}${3: comment="${4}"}${5}'
+    'body': 'add list=${1:PAULS_NUMBER} address=${2:69.69.69.69/24}'
   'IPv4 address':
     'prefix': 'ip4'
     'body': 'add address=${1:ADDRESS} interface=${2:INTERFACE}'
@@ -49,13 +52,13 @@
     'body': '/ip route'
   'route':
     'prefix': 'rt'
-    'body': 'add dst-address=${1:0.0.0.0/0} gateway=${2:0.0.0.0}${3: routing-mark=${4}}${5: comment="${6}"}${7}'
+    'body': 'add dst-address=${1:0.0.0.0/0} gateway=${2:0.0.0.0}${3: routing-mark=${4}}'
   '/ip ... vrf':
     'prefix': 'vr'
     'body': '/ip route vrf'
   'routing mark':
     'prefix': 'rtm'
-    'body': 'add routing-mark=${1:MGMT-VPN} interfaces=${2} route-distinguisher=${3}:${4}${5: comment="${6}"}${7}'
+    'body': 'add routing-mark=${1:MGMT-VPN} interfaces=${2} route-distinguisher=${3}:${4}'
   '/routing bgp':
     'prefix': 'bg'
     'body': '/routing bgp'

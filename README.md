@@ -4,6 +4,10 @@
  I will be actively working on this to bring it up to date with current RouterOS releases  
  RouterOS script syntax highlighting for Atom. Based on [RouterOS for TextMate 2](https://bitbucket.org/tiktuk/routeros.tmbundle) bundle.
 
+## Snippets
+
+There are some snippets for various standard tasks, but these are still under construction and could be changed in the future.
+
 ## Links
 - [MikroTik](http://www.mikrotik.com) — a Latvian manufacturer of computer networking equipment
 - [RouterOS scripting language documentation](http://wiki.mikrotik.com/wiki/Manual:Scripting)
